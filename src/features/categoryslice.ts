@@ -7,6 +7,7 @@ import  axios  from 'axios'
 import { Categories, Category, add_interface, update_interface, delete_interface } from '../Interfaces/categoryInterface'
 
 import {  addcategory_err, addcategory_succ } from '../utils/notifications/category'
+import { axiosInstance } from '../config/axios.config'
 
 
 const initialState:Categories={
@@ -18,7 +19,7 @@ const initialState:Categories={
 
 export const categories_get = createAsyncThunk('categories', async () => {
   //console.log('categories')
-    const res=await axios.get('http://localhost:4020/category/get',{ withCredentials: true })
+    const res=await axiosInstance.get('/category/get',{ withCredentials: true })
     console.log(res.data);
     return res.data.data
  
@@ -26,7 +27,7 @@ export const categories_get = createAsyncThunk('categories', async () => {
 })
 export const categories_add = createAsyncThunk('categories_add', async ({name,parentId}:add_interface) => {
   console.log('categories_add',name,parentId)
-    const res=await axios.post('http://localhost:4020/category/create',{name,parentId},{ withCredentials: true })
+    const res=await axiosInstance.post('/category/create',{name,parentId},{ withCredentials: true })
     if(res.status == 201){
       addcategory_succ()
     }
@@ -38,7 +39,7 @@ export const categories_add = createAsyncThunk('categories_add', async ({name,pa
 })
 export const categories_update = createAsyncThunk('categories_update', async ({name,parentId,_id}:update_interface) => {
   console.log('categories_update',name,parentId)
-    const res=await axios.put(`http://localhost:4020/category/update/${_id}`,{name,parentId},{ withCredentials: true })
+    const res=await axiosInstance.put(`/category/update/${_id}`,{name,parentId},{ withCredentials: true })
     if(res.status == 201){
       addcategory_succ()
     }
@@ -50,7 +51,7 @@ export const categories_update = createAsyncThunk('categories_update', async ({n
 })
 export const categories_delete = createAsyncThunk('categories_delete', async ({_id}:delete_interface) => {
   console.log('categories_update')
-    const res=await axios.delete(`http://localhost:4020/category/delete/${_id}`,{ withCredentials: true })
+    const res=await axiosInstance.delete(`/category/delete/${_id}`,{ withCredentials: true })
     if(res.status == 201){
       addcategory_succ()
     }

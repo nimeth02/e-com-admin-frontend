@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import  axios  from 'axios'
 import type { RootState } from '../app/store'
 import { updateprofile } from '../Interfaces/userInterface'
+import { axiosInstance } from '../config/axios.config'
 
 
 interface UserState {
@@ -28,7 +29,7 @@ Authed_admin:false
 
 export const Admin_user = createAsyncThunk('Admin_user', async () => {
   console.log('getAdmin')
-    const res=await axios.get('http://localhost:4020/userAdmin/',{ withCredentials: true })
+    const res=await axiosInstance.get('/userAdmin/',{ withCredentials: true })
    // console.log(res.data);
     return res.data.data
  
@@ -36,7 +37,7 @@ export const Admin_user = createAsyncThunk('Admin_user', async () => {
 })
 export const Admin_user_update = createAsyncThunk('Admin_user_update', async ({name,mobilenumber,password}:updateprofile) => {
   console.log('getAdmin update',name,mobilenumber,password)
-    const res=await axios.put('http://localhost:4020/userAdmin/update',{name,mobilenumber,password},{ withCredentials: true })
+    const res=await axiosInstance.put('/userAdmin/update',{name,mobilenumber,password},{ withCredentials: true })
     console.log(res.data);
     return res.data.data
  
@@ -44,7 +45,7 @@ export const Admin_user_update = createAsyncThunk('Admin_user_update', async ({n
 })
 export const Admin_user_logout = createAsyncThunk('Admin_user_logout', async () => {
   console.log('getAdmin logout')
-    const res=await axios.get('http://localhost:4020/userAdmin/logout',{ withCredentials: true })
+    const res=await axiosInstance.get('/userAdmin/logout',{ withCredentials: true })
     console.log(res.data);
     return res.data.data
  

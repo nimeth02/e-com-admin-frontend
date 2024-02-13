@@ -4,6 +4,7 @@ import type { RootState } from '../app/store'
 import { sell_adding_I, sell_add_list_item_I, sell_list_I, sell_list_item_I, sell_report_list_item_detail } from '../Interfaces/sellInterface'
 import { updateprofile } from '../Interfaces/userInterface'
 import { add_sell_report_err, add_sell_report_succ } from '../utils/notifications/sell'
+import { axiosInstance } from '../config/axios.config'
 
 interface sell_initial_interface{
   sell_product_list:sell_list_item_I[]
@@ -17,7 +18,7 @@ const initialState:sell_initial_interface={
   
 export const sell_list_get = createAsyncThunk('sell_list_get', async (admin:string) => {
   //  console.log('sell_list_get')
-      const res=await axios.post('http://localhost:4020/sell/getAll',{admin},{ withCredentials: true })
+      const res=await axiosInstance.post('/sell/getAll',{admin},{ withCredentials: true })
      // console.log(res.data.data);
       return res.data.data
    
@@ -25,7 +26,7 @@ export const sell_list_get = createAsyncThunk('sell_list_get', async (admin:stri
   })
   export const sell_product_one = createAsyncThunk('sell_product_one', async ({productId,quantity}:sell_add_list_item_I) => {
     console.log('sell_product_one',productId,quantity)
-      const res=await axios.post('http://localhost:4020/product/getone',{productId},{ withCredentials: true })
+      const res=await axiosInstance.post('/product/getone',{productId},{ withCredentials: true })
       console.log(res.data.data) 
       res.data.data.quantity=quantity 
       return res.data.data 
@@ -33,7 +34,7 @@ export const sell_list_get = createAsyncThunk('sell_list_get', async (admin:stri
   })
   export const sell_adding = createAsyncThunk('sell_adding', async ({sell_product_list,total}:sell_adding_I) => {
     console.log('sell_adding',sell_product_list,total)
-      const res=await axios.post('http://localhost:4020/sell/add',{sellreport:sell_product_list,totalprice:total},{ withCredentials: true })
+      const res=await axiosInstance.post('/sell/add',{sellreport:sell_product_list,totalprice:total},{ withCredentials: true })
       console.log(res.data.data) 
      if(res.status === 200){
       add_sell_report_succ()

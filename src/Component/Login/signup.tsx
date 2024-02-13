@@ -5,6 +5,7 @@ import { match_password, password_char, type_email, mobile_char } from '../../ut
 import axios from 'axios'
 import { usersignup } from '../../Interfaces/userInterface'
 import { opensignup,openfillerror } from '../../utils/notifications/loginnotifications'
+import { axiosInstance } from '../../config/axios.config'
 
 const initialUsersignup:usersignup={
   name:'',
@@ -52,7 +53,7 @@ const Signup = (props:p) => {
     return
     }
   try {
-    const res=await axios.post('http://localhost:4020/userAdmin/signup',user)
+    const res=await axiosInstance.post('/userAdmin/signup',user)
     console.log(res);
     if(res.status == 201){
       opensignup(email)

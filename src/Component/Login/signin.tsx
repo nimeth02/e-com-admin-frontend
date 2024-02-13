@@ -8,6 +8,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Admin_user } from '../../features/userslice'
 import { useAppDispatch } from '../../app/hook'
+import { axiosInstance } from '../../config/axios.config'
 
 const initialUsersignup:usersignin={
   email:'',
@@ -47,7 +48,7 @@ const Signin = () => {
       return
     }
     try {
-      const res=await axios.post('http://localhost:4020/userAdmin/signin',user,{ withCredentials: true }) 
+      const res=await axiosInstance.post('/userAdmin/signin',user,{ withCredentials: true }) 
       console.log(res);
       if(res.status == 200) {
         opensignin()

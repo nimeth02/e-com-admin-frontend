@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice
   
   import { Categories, Category, add_interface, update_interface, delete_interface } from '../Interfaces/categoryInterface'
 import { add_product, button_state, filter_state, productInterface, product_add_Interface, product_initial } from '../Interfaces/productInterface'
+import { axiosInstance } from '../config/axios.config'
   
   
   
@@ -28,7 +29,7 @@ import { add_product, button_state, filter_state, productInterface, product_add_
   
   export const product_get = createAsyncThunk('product_get', async ({filter_state,buttons_state}:{filter_state:filter_state,buttons_state:button_state}) => {
     console.log('products')
-      const res=await axios.post('http://localhost:4020/product/get',{filter_state,buttons_state},{ withCredentials: true })
+      const res=await axiosInstance.post('/product/get',{filter_state,buttons_state},{ withCredentials: true })
      console.log(res.data.data);
       return res.data.data
    
@@ -36,21 +37,21 @@ import { add_product, button_state, filter_state, productInterface, product_add_
   })
   export const product_add = createAsyncThunk('product_add', async (form:any) => {
     console.log('product_add',form)
-      const res=await axios.post('http://localhost:4020/product/create',form,{ withCredentials: true })
+      const res=await axiosInstance.post('/product/create',form,{ withCredentials: true })
       console.log(res.data)  
       return res.data.data 
           
   })
   export const products_update = createAsyncThunk('products_update', async ({form,_id}:{form:any,_id:string}) => {
     console.log('products_update',form)
-      const res=await axios.put(`http://localhost:4020/product/update/${_id}`,form,{ withCredentials: true })
+      const res=await axiosInstance.put(`/product/update/${_id}`,form,{ withCredentials: true })
     
       console.log(res.data)
       return res.data.data  
   })
   export const product_delete = createAsyncThunk('product_delete', async (_id:string) => {
     console.log('product_delete')
-      const res=await axios.delete(`http://localhost:4020/product/delete/${_id}`,{ withCredentials: true })
+      const res=await axiosInstance.delete(`/product/delete/${_id}`,{ withCredentials: true })
       console.log(res.data)   
           return res.data.data._id
   })
