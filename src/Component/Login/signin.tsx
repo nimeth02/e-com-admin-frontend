@@ -49,7 +49,8 @@ const Signin = () => {
     }
     try {
       const res=await axiosInstance.post('/userAdmin/signin',user,{ withCredentials: true }) 
-      console.log(res);
+      console.log(res.data);
+      localStorage.setItem("userInfo", JSON.stringify(res.data.data));
       if(res.status == 200) {
         opensignin()
         dispatch(Admin_user())
